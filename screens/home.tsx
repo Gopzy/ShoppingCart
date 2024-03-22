@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { Button, FlatList, Image, StyleSheet, Text, View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import ProductCard from "../components/ProductCard";
-import addToCart from "../store/action/addToCart";
 
 import fetchProducts from "../store/action/fetchProducts";
 
@@ -17,7 +16,7 @@ export default function HomeScreen() {
   }, []);
 
   const renderItem = ({ item }) => {
-    return <View style={{}}>{item ? <ProductCard item={item} /> : null}</View>;
+    return <View>{item ? <ProductCard item={item} /> : null}</View>;
   };
 
   return (

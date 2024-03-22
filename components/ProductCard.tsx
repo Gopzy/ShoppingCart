@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import Icon from "react-native-vector-icons/Feather";
 import { useDispatch } from "react-redux";
-import addToCart from "../store/action/addToCart";
+import { addToCart } from "../store/reducer/cardSliceReducer";
 
 const ProductCard = ({ item }) => {
   const dispatch = useDispatch();

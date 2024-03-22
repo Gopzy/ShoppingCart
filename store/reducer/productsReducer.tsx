@@ -6,7 +6,6 @@ const initialState = {
 };
 
 const productsReducer = (state = initialState, action) => {
-  // console.log("productsReducer <<<<<<<>>>>>>>>", action.payload);
   switch (action.type) {
     case "FETCH_DATA_REQUEST":
       return {
@@ -14,7 +13,6 @@ const productsReducer = (state = initialState, action) => {
         productData: [],
       };
     case "FETCH_DATA_SUCCESS":
-      // console.log("FETCH_DATA_SUCCESS >>>>>>>");
       return {
         ...state,
         productData: action.payload,

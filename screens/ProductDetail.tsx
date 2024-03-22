@@ -10,13 +10,13 @@ import {
 } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import colors from "../components/colors";
-import { addToCartSlice } from "../store/reducer/cardSlice";
+import { addToCart } from "../store/reducer/cardSliceReducer";
 
 const ProductDetail = ({ route }) => {
   const navigation = useNavigation();
-  const cartSlice = useSelector((state) => state?.cartSlice) || [];
+  const cartReducer = useSelector((state) => state?.cart) || [];
 
-  console.log("cartSlice state value ::::", cartSlice);
+  console.log("cartReducer state value ::::", cartReducer);
 
   const dispatch = useDispatch();
   const {
@@ -41,8 +41,7 @@ const ProductDetail = ({ route }) => {
       description,
       amount,
     };
-    await dispatch(addToCartSlice(cardObj));
-
+    await dispatch(addToCart(cardObj));
     navigation.navigate("Cart");
   };
 
@@ -51,7 +50,7 @@ const ProductDetail = ({ route }) => {
       <Image source={{ uri: mainImage }} style={styles.image} />
       <View style={styles.detailsContainer}>
         <Text style={styles.name}>{name}</Text>
-        <Text style={styles.name}>Available {SKU}</Text>
+        {/* <Text style={styles.name}>Available {SKU}</Text> */}
         <Text style={styles.description}>{description}</Text>
       </View>
       <TouchableOpacity onPress={addItemToCart} style={styles.addButton}>

@@ -1,92 +1,48 @@
 import React, { useMemo } from "react";
-import { View, Text, Pressable, Image } from "react-native";
+import { View, Text, Pressable, Image, StyleSheet } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
-import { addToCartSlice, decrementQty } from "../store/reducer/cardSlice";
+import { addToCart, decrementQty } from "../store/reducer/cardSliceReducer";
 
 const CartScreen = () => {
   const dispatch = useDispatch();
-  const cartSlice = useSelector((state) => state?.cartSlice) || [];
+  const cartReducer = useSelector((state) => state?.cart) || [];
 
   const getTotalAmount = useMemo(() => {
     let total = 0;
-    cartSlice?.cart.map(({ quantity, amount }) => {
+    cartReducer?.cart.map(({ quantity, amount }) => {
       total += quantity * amount;
     });
     return total;
-  }, [cartSlice?.cart]);
+  }, [cartReducer?.cart]);
 
   return (
     <View>
-      {cartSlice?.cart.map((item, index) => (
-        <Pressable
-          style={{
-            marginHorizontal: 10,
-            flexDirection: "row",
-            alignItems: "center",
-            justifyContent: "space-between",
-          }}
-        >
+      {cartReducer?.cart.map((item, index) => (
+        <Pressable style={style.container}>
           <View>
-            <Text style={{ fontSize: 16, fontWeight: "500", marginBottom: 10 }}>
-              {item.name}
-            </Text>
-            <Image
-              source={{ uri: item.mainImage }}
-              style={{ width: 80, height: 80, borderRadius: 10 }}
-            />
+            <Text style={style.itemName}>{item.name}</Text>
+            <Image source={{ uri: item.mainImage }} style={style.imgStyle} />
           </View>
 
-          <Pressable
-            style={{
-              flexDirection: "row",
-              alignItems: "center",
-              backgroundColor: "#FF3366",
-              borderRadius: 5,
-              width: 95,
-            }}
-          >
+          <Pressable style={style.btn}>
             <Pressable
               onPress={() => {
                 dispatch(decrementQty(item));
               }}
             >
-              <Text
-                style={{
-                  fontSize: 25,
-                  color: "white",
-                  paddingHorizontal: 10,
-                }}
-              >
-                -
-              </Text>
+              <Text style={[style.btnTxt, style.font_20]}>-</Text>
             </Pressable>
 
             <Pressable>
-              <Text
-                style={{
-                  fontSize: 20,
-                  color: "white",
-                  paddingHorizontal: 10,
-                }}
-              >
-                {item.quantity}
-              </Text>
+              <Text style={[style.btnTxt, style.font_15]}>{item.quantity}</Text>
             </Pressable>
 
             <Pressable
               onPress={() => {
-                dispatch(addToCartSlice(item));
+                dispatch(addToCart(item));
               }}
             >
-              <Text
-                style={{
-                  fontSize: 20,
-                  color: "white",
-                  paddingHorizontal: 10,
-                }}
-              >
-                +
-              </Text>
+              <Text style={[style.btnTxt, style.font_20]}>+</Text>
             </Pressable>
           </Pressable>
         </Pressable>
@@ -95,5 +51,44 @@ const CartScreen = () => {
     </View>
   );
 };
+
+const style = StyleSheet.create({
+  container: {
+    marginHorizontal: 10,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+  },
+  itemName: {
+    fontSize: 16,
+    fontWeight: "500",
+    marginBottom: 10,
+  },
+  imgStyle: {
+    width: 80,
+    height: 80,
+    borderRadius: 10,
+  },
+  btn: {
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "#FF3366",
+    borderRadius: 5,
+    width: 95,
+  },
+  btnTxt: {
+    color: "white",
+    paddingHorizontal: 10,
+  },
+  font_25: {
+    fontSize: 25,
+  },
+  font_15: {
+    fontSize: 15,
+  },
+  font_20: {
+    fontSize: 20,
+  },
+});
 
 export default CartScreen;
