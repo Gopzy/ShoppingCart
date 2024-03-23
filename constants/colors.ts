@@ -5,6 +5,7 @@ const colors = {
   lightGrayGrow: "#FAFAFA",
   fadedGreen: "#00CF53",
   primaryBlue: "#3A9FF6",
+  cartgreen: "#CAEBE6",
 };
 
 export default colors;

@@ -1,6 +1,7 @@
 import { useNavigation } from "@react-navigation/native";
 import React from "react";
 import {
+  Alert,
   Button,
   Image,
   StyleSheet,
@@ -10,22 +11,47 @@ import {
 } from "react-native";
 import Icon from "react-native-vector-icons/Feather";
 import { useDispatch } from "react-redux";
-import { addToCart } from "../store/reducer/cardSliceReducer";
+import { addToCart } from "../store/reducer/cardReducer";
+import DisplayAlert from "./alert";
+
+export type cardObj = {
+  quantity: number;
+  id: number;
+  name: string;
+  mainImage: string;
+  description: string;
+  amount: number;
+};
 
 const ProductCard = ({ item }) => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
 
-  // console.log("ItemCard", item);
   const {
     name,
     mainImage,
     SKU,
+    id,
+    description,
     price: { amount },
   } = item;
 
-  const addItemToCart = () => {
-    dispatch(addToCart(item));
+  const addItemToCart = async () => {
+    const cardObj: cardObj = {
+      quantity: 0,
+      id,
+      name,
+      mainImage,
+      description,
+      amount,
+    };
+    await dispatch(addToCart(cardObj));
+
+    DisplayAlert({
+      title: "Product added",
+      message: "Continue shupping",
+      onPressFun: () => {},
+    });
   };
 
   return (
@@ -70,18 +96,20 @@ const style = StyleSheet.create({
   imgContainer: {
     borderWidth: 1,
     borderRadius: 10,
+    borderColor: "gray",
     padding: 15,
-    width: 155,
-    height: 155,
+    width: 150,
+    height: 175,
     marginEnd: 22,
   },
   container: {
-    padding: 15,
+    paddingHorizontal: 15,
+    paddingVertical: 5,
   },
   iconStyle: {
     position: "absolute",
     right: -5,
-    bottom: -12,
+    bottom: -30,
   },
   font_14: {
     fontSize: 14,

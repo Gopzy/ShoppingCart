@@ -4,14 +4,14 @@ import productsReducer from "./reducer/productsReducer";
 
 import createSagaMiddleware from "redux-saga";
 import { watchFetchData } from "./saga/fetchData.saga";
-import { cartSliceReducer } from "./reducer/cardSliceReducer";
+import { cartReducer } from "./reducer/cardReducer";
 
 const sagaMiddleware = createSagaMiddleware();
 
 export default configureStore({
   reducer: {
     products: productsReducer,
-    cart: cartSliceReducer.reducer,
+    cart: cartReducer.reducer,
   },
   middleware: (gDM) => gDM().concat(sagaMiddleware),
 });

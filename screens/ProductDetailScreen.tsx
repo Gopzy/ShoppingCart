@@ -9,8 +9,9 @@ import {
   View,
 } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
-import colors from "../components/colors";
-import { addToCart } from "../store/reducer/cardSliceReducer";
+import { cardObj } from "../components/ProductCard";
+import colors from "../constants/colors";
+import { addToCart } from "../store/reducer/cardReducer";
 
 const ProductDetail = ({ route }) => {
   const navigation = useNavigation();
@@ -30,10 +31,8 @@ const ProductDetail = ({ route }) => {
     },
   } = route.params;
 
-  const productData = route.params.product;
-
   const addItemToCart = async () => {
-    const cardObj = {
+    const cardObj: cardObj = {
       quantity: 0,
       id,
       name,
