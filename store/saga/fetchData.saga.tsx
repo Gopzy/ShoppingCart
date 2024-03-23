@@ -1,7 +1,7 @@
 import axios from "axios";
 import { call, put, takeLatest } from "redux-saga/effects";
 
-export function* fetchDataSaga({ payload }) {
+export function* getProductSaga({ success, failed }) {
   try {
     const {
       data: { data },
@@ -9,13 +9,14 @@ export function* fetchDataSaga({ payload }) {
       axios.get,
       "https://s3-eu-west-1.amazonaws.com/api.themeshplatform.com/products.json"
     );
-
-    yield put({ type: "FETCH_DATA_SUCCESS", payload: data });
+    success?.();
+    yield put({ type: "GET_DATA_SUCCESS", payload: data });
   } catch (error) {
-    yield put({ type: "FETCH_DATA_ERROR", payload: error });
+    failed?.();
+    yield put({ type: "GET_DATA_ERROR", payload: error });
   }
 }
 
 export function* watchFetchData() {
-  yield takeLatest("FETCH_DATA", fetchDataSaga);
+  yield takeLatest("GET_DATA", getProductSaga);
 }

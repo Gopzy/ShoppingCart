@@ -1,5 +1,3 @@
-import React from "react";
-
 const initialState = {
   productData: [],
   productData_error: null,
@@ -7,17 +5,17 @@ const initialState = {
 
 const productsReducer = (state = initialState, action) => {
   switch (action.type) {
-    case "FETCH_DATA_REQUEST":
+    case "GET_DATA_REQUEST":
       return {
         ...state,
         productData: [],
       };
-    case "FETCH_DATA_SUCCESS":
+    case "GET_DATA_SUCCESS":
       return {
         ...state,
         productData: action.payload,
       };
-    case "FETCH_DATA_FAIL":
+    case "GET_DATA_FAIL":
       return {
         ...state,
         productData_error: action.payload,

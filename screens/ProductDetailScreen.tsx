@@ -8,18 +8,15 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { useDispatch, useSelector } from "react-redux";
-import { cardObj } from "../components/ProductCard";
+import { useDispatch } from "react-redux";
+import { cardObjectType } from "../components/ProductCard";
 import colors from "../constants/colors";
 import { addToCart } from "../store/reducer/cardReducer";
 
 const ProductDetail = ({ route }) => {
   const navigation = useNavigation();
-  const cartReducer = useSelector((state) => state?.cart) || [];
-
-  console.log("cartReducer state value ::::", cartReducer);
-
   const dispatch = useDispatch();
+
   const {
     product: {
       name,
@@ -32,7 +29,7 @@ const ProductDetail = ({ route }) => {
   } = route.params;
 
   const addItemToCart = async () => {
-    const cardObj: cardObj = {
+    const cardObj: cardObjectType = {
       quantity: 0,
       id,
       name,
@@ -49,7 +46,6 @@ const ProductDetail = ({ route }) => {
       <Image source={{ uri: mainImage }} style={styles.image} />
       <View style={styles.detailsContainer}>
         <Text style={styles.name}>{name}</Text>
-        {/* <Text style={styles.name}>Available {SKU}</Text> */}
         <Text style={styles.description}>{description}</Text>
       </View>
       <TouchableOpacity onPress={addItemToCart} style={styles.addButton}>

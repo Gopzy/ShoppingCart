@@ -1,29 +1,22 @@
 import { useNavigation } from "@react-navigation/native";
 import React from "react";
-import {
-  Alert,
-  Button,
-  Image,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import Icon from "react-native-vector-icons/Feather";
 import { useDispatch } from "react-redux";
+import { ProductsType } from "../constants/types";
 import { addToCart } from "../store/reducer/cardReducer";
 import DisplayAlert from "./alert";
 
-export type cardObj = {
+export type cardObjectType = {
   quantity: number;
-  id: number;
+  id: string;
   name: string;
   mainImage: string;
   description: string;
   amount: number;
 };
 
-const ProductCard = ({ item }) => {
+const ProductCard = ({ item }: { item: ProductsType }) => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
 
@@ -37,7 +30,7 @@ const ProductCard = ({ item }) => {
   } = item;
 
   const addItemToCart = async () => {
-    const cardObj: cardObj = {
+    const cardObj: cardObjectType = {
       quantity: 0,
       id,
       name,
@@ -50,7 +43,7 @@ const ProductCard = ({ item }) => {
     DisplayAlert({
       title: "Product added",
       message: "Continue shupping",
-      onPressFun: () => {},
+      onPressFunction: () => {},
     });
   };
 

@@ -5,7 +5,6 @@ import {
   Pressable,
   Image,
   StyleSheet,
-  Alert,
   ScrollView,
 } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
@@ -17,10 +16,12 @@ import {
 import Icon from "react-native-vector-icons/Feather";
 import colors from "../constants/colors";
 import DisplayAlert from "../components/alert";
+import { Reducers } from "../constants/types";
+import { cardObjectType } from "../components/ProductCard";
 
 const CartScreen = () => {
   const dispatch = useDispatch();
-  const cartReducer = useSelector((state) => state?.cart) || [];
+  const cartReducer = useSelector((state: Reducers) => state?.cart) || [];
 
   const getTotalAmount = useMemo(() => {
     let total = 0;
@@ -34,23 +35,33 @@ const CartScreen = () => {
     DisplayAlert({
       title: "Remove Product",
       message: "are you sure, you want to delete the product?",
-      onPressFun: () => dispatch(removeFromCart(item)),
+      onPressFunction: () => dispatch(removeFromCart(item)),
     });
   };
 
-  const renderCartItem = (item, index) => {
+  const renderCartItem = (
+    item,
+    index: { item: cardObjectType; index: number }
+  ) => {
+    const { quantity, amount } = item;
+
     return (
-      <Pressable key={index} style={style.container}>
+      <View key={index} style={style.container}>
         <View>
           <Text style={style.itemName}>{item.name}</Text>
-          <Image source={{ uri: item.mainImage }} style={style.imgStyle} />
+          <View style={style.quantity}>
+            <Image source={{ uri: item.mainImage }} style={style.imgStyle} />
+            <Text style={style.quantityTxt}>
+              {item.quantity} x {quantity * amount}
+            </Text>
+          </View>
         </View>
         <View>
           <Pressable style={style.btn}>
-            {item.quantity !== 1 ? (
+            {quantity !== 1 ? (
               <Pressable
                 onPress={
-                  item.quantity !== 1
+                  quantity !== 1
                     ? () => {
                         dispatch(decrementQty(item));
                       }
@@ -62,7 +73,7 @@ const CartScreen = () => {
             ) : null}
 
             <Pressable>
-              <Text style={[style.btnTxt, style.font_15]}>{item.quantity}</Text>
+              <Text style={[style.btnTxt, style.font_15]}>{quantity}</Text>
             </Pressable>
 
             <Pressable
@@ -77,7 +88,7 @@ const CartScreen = () => {
             <Icon name="delete" size={25} color="#900" />
           </Pressable>
         </View>
-      </Pressable>
+      </View>
     );
   };
 
@@ -87,10 +98,8 @@ const CartScreen = () => {
 
       {getTotalAmount > 0 ? (
         <View style={style.totalContainer}>
-          <View style={style.innerContainer}>
-            <Text style={style.totalText}>Total Amount:</Text>
-            <Text style={style.amountText}>{getTotalAmount}</Text>
-          </View>
+          <Text style={style.totalText}>Total Amount:</Text>
+          <Text style={style.amountText}>{getTotalAmount}</Text>
         </View>
       ) : null}
     </ScrollView>
@@ -108,16 +117,23 @@ const style = StyleSheet.create({
     marginVertical: 5,
     borderRadius: 10,
   },
+  scrollContainer: {
+    paddingHorizontal: 5,
+  },
+  quantity: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  quantityTxt: {
+    paddingLeft: 10,
+    fontSize: 20,
+  },
   totalContainer: {
     backgroundColor: "#fff",
     borderTopWidth: 1.5,
     borderTopColor: "#ccc",
     padding: 10,
-  },
-  scrollContainer: {
-    paddingHorizontal: 5,
-  },
-  innerContainer: {
+    paddingHorizontal: 10,
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",

@@ -1,28 +1,36 @@
 import { useEffect, useState } from "react";
-import { Button, FlatList, Image, StyleSheet, Text, View } from "react-native";
+import { FlatList, StyleSheet, View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import ProductCard from "../components/ProductCard";
+import { ProductsType, Reducers } from "../constants/types";
 
-import fetchProducts from "../store/action/fetchProducts";
+import getProducts from "../store/action/getProducts";
 
 export default function HomeScreen() {
   const dispatch = useDispatch();
-  const products = useSelector((state) => state?.products) || [];
+  const product =
+    useSelector((state: Reducers) => state?.products?.productData) || [];
 
-  console.log("productData >>>>>>>", products?.productData);
+  const [products, setProducts] = useState([]);
 
   useEffect(() => {
-    dispatch(fetchProducts());
+    dispatch(getProducts());
+
+    // dispatch(
+    //   getProducts(() => {
+    //     setProducts(product);
+    //   })
+    // );
   }, []);
 
-  const renderItem = ({ item }) => {
-    return <View>{item ? <ProductCard item={item} /> : null}</View>;
-  };
+  const renderItem = ({ item }: { item: ProductsType }) => (
+    <>{item ? <ProductCard item={item} /> : null}</>
+  );
 
   return (
     <View style={styles.container}>
       <FlatList
-        data={products?.productData}
+        data={product || []}
         renderItem={renderItem}
         keyExtractor={(item) => item.id}
         numColumns={2}

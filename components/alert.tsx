@@ -3,10 +3,10 @@ import { Alert } from "react-native";
 type alert = {
   title: string;
   message: string;
-  onPressFun?: void;
+  onPressFunction?: void;
 };
 
-const DisplayAlert = ({ title, message, onPressFun }: alert) => {
+const DisplayAlert = ({ title, message, onPressFunction }: alert) => {
   Alert.alert(title, message, [
     {
       text: "Cancel",
@@ -15,7 +15,7 @@ const DisplayAlert = ({ title, message, onPressFun }: alert) => {
     },
     {
       text: "OK",
-      onPress: () => onPressFun(),
+      onPress: () => onPressFunction(),
     },
   ]);
 };
