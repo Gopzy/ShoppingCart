@@ -1,34 +1,31 @@
 import { useNavigation } from "@react-navigation/native";
 import React from "react";
-import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import { ProductsType } from "../constants/types";
+import {
+  Image,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+  Dimensions,
+} from "react-native";
+import { PRODUCT_DETAILS_SCREEN } from "../constants";
+import { productDataType } from "../constants/types";
 
-export type cardObjectType = {
-  quantity: number;
-  id: string;
-  name: string;
-  mainImage: string;
-  description: string;
-  amount: number;
-  selectedSize: [];
-};
-
-const Product = ({ item }: { item: ProductsType }) => {
+const Product = ({ item }: { item: productDataType }) => {
   const navigation = useNavigation();
 
   const {
     name,
     mainImage,
     SKU,
-    id,
-    description,
-    stockStatus,
     price: { amount },
   } = item;
 
   return (
     <TouchableOpacity
-      onPress={() => navigation.navigate("ProductDetail", { product: item })}
+      onPress={() =>
+        navigation.navigate(PRODUCT_DETAILS_SCREEN, { product: item })
+      }
       style={style.container}
     >
       {item ? (
@@ -63,17 +60,18 @@ const style = StyleSheet.create({
     height: 80,
   },
   imgContainer: {
-    borderWidth: 1,
-    borderRadius: 10,
-    borderColor: "gray",
+    elevation: 5,
+    shadowOffset: { height: 5, width: 5 },
+    shadowRadius: 2,
+    shadowColor: "grey",
+    shadowOpacity: 0.4,
     padding: 15,
-    width: 150,
+    width: Dimensions.get("screen").width / 2 - 20,
     height: 175,
-    marginEnd: 22,
   },
   container: {
-    paddingHorizontal: 15,
-    paddingVertical: 5,
+    marginVertical: 8,
+    marginLeft: 12,
   },
   iconStyle: {
     position: "absolute",

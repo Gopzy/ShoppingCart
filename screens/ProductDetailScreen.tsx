@@ -2,10 +2,11 @@ import { useNavigation } from "@react-navigation/native";
 import React, { useState } from "react";
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { useDispatch } from "react-redux";
-import { cardObjectType } from "../components/Product";
 import colors from "../constants/colors";
 import { addToCart } from "../store/reducer/cardReducer";
 import { RadioButton } from "react-native-paper";
+import { cardObjectType } from "../constants/types";
+import { CART_SCREEN } from "../constants";
 
 const ProductDetail = ({ route }) => {
   const navigation = useNavigation();
@@ -41,7 +42,7 @@ const ProductDetail = ({ route }) => {
       selectedSize: sizes[checked],
     };
     await dispatch(addToCart(cardObj));
-    navigation.navigate("Cart");
+    navigation.navigate(CART_SCREEN as never);
   };
 
   const renderRadioBtn = (item, index: { item: number; index: number }) => {

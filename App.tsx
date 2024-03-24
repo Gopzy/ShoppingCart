@@ -1,4 +1,3 @@
-import { StyleSheet } from "react-native";
 import { Provider } from "react-redux";
 import HomeScreen from "./screens/homeScreen";
 import configureStore from "./store/configureStore";
@@ -8,9 +7,17 @@ import ProductDetail from "./screens/ProductDetailScreen";
 import CartScreen from "./screens/cartScreen";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Icon from "react-native-vector-icons/Feather";
+import { productDataType } from "./constants/types";
+import { CART_SCREEN, PRODUCT_DETAILS_SCREEN } from "./constants";
+
+export type rootStactParams = {
+  Home: undefined;
+  Cart: undefined;
+  ProductDetail: { product: productDataType };
+};
 
 export default function App() {
-  const Stack = createNativeStackNavigator();
+  const Stack = createNativeStackNavigator<rootStactParams>();
   const Tab = createBottomTabNavigator();
 
   function Home() {
@@ -22,16 +29,14 @@ export default function App() {
           options={{
             headerShown: false,
             tabBarLabel: "Home",
-            tabBarIcon: ({ color, size }) => <Icon name="home" size={25} />,
+            tabBarIcon: () => <Icon name="home" size={25} />,
           }}
         />
         <Tab.Screen
           options={{
             headerShown: true,
             tabBarLabel: "Cart",
-            tabBarIcon: ({ color, size }) => (
-              <Icon name="shopping-cart" size={25} />
-            ),
+            tabBarIcon: () => <Icon name="shopping-cart" size={25} />,
           }}
           name="Cart"
           component={CartScreen}
@@ -49,19 +54,13 @@ export default function App() {
             component={Home}
             options={{ headerShown: false }}
           />
-          <Stack.Screen name="ProductDetail" component={ProductDetail} />
-          <Stack.Screen name="Cart" component={CartScreen} />
+          <Stack.Screen
+            name={PRODUCT_DETAILS_SCREEN}
+            component={ProductDetail}
+          />
+          <Stack.Screen name={CART_SCREEN} component={CartScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});

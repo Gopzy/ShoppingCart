@@ -16,8 +16,7 @@ import {
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import colors from "../constants/colors";
 import DisplayAlert from "../components/alert";
-import { Reducers } from "../constants/types";
-import { cardObjectType } from "../components/Product";
+import { cardObjectType, Reducers } from "../constants/types";
 
 const CartScreen = () => {
   const dispatch = useDispatch();
@@ -46,7 +45,7 @@ const CartScreen = () => {
     const { quantity, amount, mainImage, name, selectedSize } = item;
 
     return (
-      <View key={index} style={style.container}>
+      <View key={index.toString()} style={style.container}>
         <View>
           <Text style={style.itemName}>{name}</Text>
           <View style={style.quantity}>

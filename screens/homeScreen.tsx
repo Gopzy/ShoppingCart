@@ -11,19 +11,11 @@ export default function HomeScreen() {
   const product =
     useSelector((state: Reducers) => state?.products?.productData) || [];
 
-  const [products, setProducts] = useState([]);
-
   useEffect(() => {
     dispatch(getProducts());
-
-    // dispatch(
-    //   getProducts(() => {
-    //     setProducts(product);
-    //   })
-    // );
   }, []);
 
-  const renderItem = ({ item }: { item: ProductsType }) => (
+  const renderItem = ({ item }: { item: any }) => (
     <>{item ? <Product item={item} /> : null}</>
   );
 
