@@ -3,7 +3,7 @@ import HomeScreen from "./screens/homeScreen";
 import configureStore from "./store/configureStore";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import ProductDetail from "./screens/ProductDetailScreen";
+import ProductDetail from "./screens/productDetailScreen";
 import CartScreen from "./screens/cartScreen";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Icon from "react-native-vector-icons/Feather";

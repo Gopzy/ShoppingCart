@@ -39,6 +39,7 @@ const ProductDetail = ({ route }) => {
       mainImage,
       description,
       amount,
+      colour,
       selectedSize: sizes[checked],
     };
     await dispatch(addToCart(cardObj));
@@ -50,7 +51,7 @@ const ProductDetail = ({ route }) => {
       <View style={styles.radioContainer}>
         <Text>{item}</Text>
         <RadioButton
-          key={index}
+          key={index.toString()}
           value={item.id}
           status={checked === index ? "checked" : "unchecked"}
           onPress={() => setChecked(index)}
@@ -72,7 +73,10 @@ const ProductDetail = ({ route }) => {
           <Text style={[styles.name, styles.stock]}>{stockStatus}</Text>
         </View>
       </View>
-      <View style={styles.radioBtn}>{sizes?.map(renderRadioBtn)}</View>
+      <View style={styles.sizeContainer}>
+        <Text style={styles.font_18}>select size :</Text>
+        <View style={styles.radioBtn}>{sizes?.map(renderRadioBtn)}</View>
+      </View>
       <TouchableOpacity
         disabled={btnDisable}
         onPress={addItemToCart}
@@ -96,6 +100,10 @@ const styles = StyleSheet.create({
     borderColor: "red",
     borderWidth: 0.7,
     borderRadius: 20,
+  },
+  sizeContainer: {
+    flexDirection: "row",
+    alignItems: "center",
   },
   color: {
     fontSize: 16,
@@ -126,6 +134,9 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
     fontSize: 18,
     color: colors.greenPrimary,
+  },
+  font_18: {
+    fontSize: 18,
   },
   brandName: {
     fontSize: 20,

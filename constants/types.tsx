@@ -4,20 +4,7 @@ export interface Reducers {
 }
 
 export type ProductsType = {
-  productData: [
-    {
-      SKU: number;
-      brandName: string;
-      colour: string;
-      description: string;
-      id: string;
-      mainImage: string;
-      name: string;
-      price: { amount: number; currency: "GBP" };
-      sizes: [];
-      stockStatus: "IN STOCK" | "OUT OF STOCK";
-    }
-  ];
+  productData: [productDataType];
 };
 
 export type productDataType = {
@@ -40,13 +27,10 @@ export type cardObjectType = {
   mainImage: string;
   description: string;
   amount: number;
+  colour: string;
   selectedSize: [];
 };
 
 export type CartType = {
-  cart: [];
+  cart: [cardObjectType];
 };
-
-// export type ProductsType = {
-//   productData: [];
-// };

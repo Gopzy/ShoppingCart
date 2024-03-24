@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { FlatList, StyleSheet, View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
-import Product from "../components/Product";
-import { ProductsType, Reducers } from "../constants/types";
+import Product from "../components/product";
+import { Reducers } from "../constants/types";
 
 import getProducts from "../store/action/getProducts";
 

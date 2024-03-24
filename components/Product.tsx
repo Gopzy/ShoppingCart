@@ -60,11 +60,8 @@ const style = StyleSheet.create({
     height: 80,
   },
   imgContainer: {
-    elevation: 5,
-    shadowOffset: { height: 5, width: 5 },
-    shadowRadius: 2,
-    shadowColor: "grey",
-    shadowOpacity: 0.4,
+    borderWidth: 1,
+    borderRadius: 5,
     padding: 15,
     width: Dimensions.get("screen").width / 2 - 20,
     height: 175,
