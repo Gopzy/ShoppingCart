@@ -13,11 +13,11 @@ import {
   decrementQty,
   removeFromCart,
 } from "../store/reducer/cardReducer";
-import Icon from "react-native-vector-icons/Feather";
+import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import colors from "../constants/colors";
 import DisplayAlert from "../components/alert";
 import { Reducers } from "../constants/types";
-import { cardObjectType } from "../components/ProductCard";
+import { cardObjectType } from "../components/Product";
 
 const CartScreen = () => {
   const dispatch = useDispatch();
@@ -25,13 +25,13 @@ const CartScreen = () => {
 
   const getTotalAmount = useMemo(() => {
     let total = 0;
-    cartReducer?.cart.map(({ quantity, amount }) => {
+    cartReducer?.cart.forEach(({ quantity, amount }) => {
       total += quantity * amount;
     });
     return total;
   }, [cartReducer?.cart]);
 
-  const deleteAlert = (item) => {
+  const deleteAlert = (item: cardObjectType) => {
     DisplayAlert({
       title: "Remove Product",
       message: "are you sure, you want to delete the product?",
@@ -43,17 +43,20 @@ const CartScreen = () => {
     item,
     index: { item: cardObjectType; index: number }
   ) => {
-    const { quantity, amount } = item;
+    const { quantity, amount, mainImage, name, selectedSize } = item;
 
     return (
       <View key={index} style={style.container}>
         <View>
-          <Text style={style.itemName}>{item.name}</Text>
+          <Text style={style.itemName}>{name}</Text>
           <View style={style.quantity}>
-            <Image source={{ uri: item.mainImage }} style={style.imgStyle} />
-            <Text style={style.quantityTxt}>
-              {item.quantity} x {quantity * amount}
-            </Text>
+            <Image source={{ uri: mainImage }} style={style.imgStyle} />
+            <View>
+              <Text style={style.quantityTxt}>£{quantity * amount}</Text>
+              <Text style={{ paddingLeft: 10, fontSize: 18, marginTop: 10 }}>
+                {`size: ${selectedSize}`}
+              </Text>
+            </View>
           </View>
         </View>
         <View>
@@ -85,7 +88,7 @@ const CartScreen = () => {
             </Pressable>
           </Pressable>
           <Pressable onPress={() => deleteAlert(item)} style={style.deleteBtn}>
-            <Icon name="delete" size={25} color="#900" />
+            <Icon name="delete-outline" size={25} color={colors.iconRed} />
           </Pressable>
         </View>
       </View>
@@ -126,17 +129,16 @@ const style = StyleSheet.create({
   },
   quantityTxt: {
     paddingLeft: 10,
-    fontSize: 20,
+    fontSize: 18,
   },
   totalContainer: {
-    backgroundColor: "#fff",
-    borderTopWidth: 1.5,
-    borderTopColor: "#ccc",
-    padding: 10,
-    paddingHorizontal: 10,
+    backgroundColor: colors.bgWhite,
+    borderTopWidth: 2,
+    borderTopColor: colors.borderGrey,
+    padding: 8,
     flexDirection: "row",
     justifyContent: "space-between",
-    alignItems: "center",
+    marginHorizontal: 10,
   },
   totalText: {
     fontSize: 18,

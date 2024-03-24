@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { FlatList, StyleSheet, View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
-import ProductCard from "../components/ProductCard";
+import Product from "../components/Product";
 import { ProductsType, Reducers } from "../constants/types";
 
 import getProducts from "../store/action/getProducts";
@@ -24,13 +24,13 @@ export default function HomeScreen() {
   }, []);
 
   const renderItem = ({ item }: { item: ProductsType }) => (
-    <>{item ? <ProductCard item={item} /> : null}</>
+    <>{item ? <Product item={item} /> : null}</>
   );
 
   return (
     <View style={styles.container}>
       <FlatList
-        data={product || []}
+        data={product}
         renderItem={renderItem}
         keyExtractor={(item) => item.id}
         numColumns={2}

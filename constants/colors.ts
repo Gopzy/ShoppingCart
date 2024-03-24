@@ -6,6 +6,11 @@ const colors = {
   fadedGreen: "#00CF53",
   primaryBlue: "#3A9FF6",
   cartgreen: "#CAEBE6",
+  iconRed: "#900",
+  bgWhite: "#fff",
+  borderGrey: "#ccc",
+  lightGray: "#515A58",
+  shadowGray: "#3D4441",
 };
 
 export default colors;

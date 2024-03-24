@@ -3,7 +3,7 @@ import { Alert } from "react-native";
 type alert = {
   title: string;
   message: string;
-  onPressFunction?: void;
+  onPressFunction?: Function;
 };
 
 const DisplayAlert = ({ title, message, onPressFunction }: alert) => {

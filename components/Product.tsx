@@ -1,11 +1,7 @@
 import { useNavigation } from "@react-navigation/native";
 import React from "react";
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import Icon from "react-native-vector-icons/Feather";
-import { useDispatch } from "react-redux";
 import { ProductsType } from "../constants/types";
-import { addToCart } from "../store/reducer/cardReducer";
-import DisplayAlert from "./alert";
 
 export type cardObjectType = {
   quantity: number;
@@ -14,10 +10,10 @@ export type cardObjectType = {
   mainImage: string;
   description: string;
   amount: number;
+  selectedSize: [];
 };
 
-const ProductCard = ({ item }: { item: ProductsType }) => {
-  const dispatch = useDispatch();
+const Product = ({ item }: { item: ProductsType }) => {
   const navigation = useNavigation();
 
   const {
@@ -26,26 +22,9 @@ const ProductCard = ({ item }: { item: ProductsType }) => {
     SKU,
     id,
     description,
+    stockStatus,
     price: { amount },
   } = item;
-
-  const addItemToCart = async () => {
-    const cardObj: cardObjectType = {
-      quantity: 0,
-      id,
-      name,
-      mainImage,
-      description,
-      amount,
-    };
-    await dispatch(addToCart(cardObj));
-
-    DisplayAlert({
-      title: "Product added",
-      message: "Continue shupping",
-      onPressFunction: () => {},
-    });
-  };
 
   return (
     <TouchableOpacity
@@ -58,28 +37,25 @@ const ProductCard = ({ item }: { item: ProductsType }) => {
           <View>
             <View>
               <Text style={style.font_14}>
-                {name.length > 18 ? `${name.substring(0, 13)}...` : name}
+                {name.length > 20 ? `${name.substring(0, 15)}...` : name}
               </Text>
               <Text style={[style.font_14, style.fontWeight_500]}>
-                {`$ ${amount}`}
+                {`£${amount}`}
               </Text>
             </View>
-            <View style={style.iconStyle}>
-              <Icon
-                name="shopping-cart"
-                size={25}
-                color="#900"
-                onPress={addItemToCart}
-              />
-            </View>
           </View>
+
+          {/* displaying random no of item sold, sold number is not coming from the API */}
+          <Text style={style.itemSold}>
+            {Math.floor(Math.random() * SKU)} items sold
+          </Text>
         </View>
       ) : null}
     </TouchableOpacity>
   );
 };
 
-export default ProductCard;
+export default Product;
 
 const style = StyleSheet.create({
   image: {
@@ -109,5 +85,11 @@ const style = StyleSheet.create({
   },
   fontWeight_500: {
     fontWeight: "500",
+  },
+  itemSold: {
+    fontWeight: "400",
+    marginBottom: 10,
+    fontSize: 12,
+    marginTop: 5,
   },
 });

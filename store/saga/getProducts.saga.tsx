@@ -1,5 +1,10 @@
 import axios from "axios";
 import { call, put, takeLatest } from "redux-saga/effects";
+import {
+  GET_PRODUCTS,
+  GET_PRODUCTS_FAILED,
+  GET_PRODUCTS_SUCCESS,
+} from "../action/actionType";
 
 export function* getProductSaga({ success, failed }) {
   try {
@@ -10,13 +15,13 @@ export function* getProductSaga({ success, failed }) {
       "https://s3-eu-west-1.amazonaws.com/api.themeshplatform.com/products.json"
     );
     success?.();
-    yield put({ type: "GET_DATA_SUCCESS", payload: data });
+    yield put({ type: GET_PRODUCTS_SUCCESS, payload: data });
   } catch (error) {
     failed?.();
-    yield put({ type: "GET_DATA_ERROR", payload: error });
+    yield put({ type: GET_PRODUCTS_FAILED, payload: error });
   }
 }
 
-export function* watchFetchData() {
-  yield takeLatest("GET_DATA", getProductSaga);
+export function* watchGetProduct() {
+  yield takeLatest(GET_PRODUCTS, getProductSaga);
 }
