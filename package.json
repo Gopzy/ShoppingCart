@@ -32,9 +32,7 @@
     "typescript": "^5.3.0"
   },
   "private": true,
-  "devDependencies": {
-    "tailwindcss": "3.3.2"
-  },
+  "devDependencies": {},
   "resolutions": {
     "react-devtools-core": "~4.25.0"
   }
