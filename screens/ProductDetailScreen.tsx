@@ -51,7 +51,7 @@ const ProductDetail = ({ route }) => {
       <View style={styles.radioContainer}>
         <Text>{item}</Text>
         <RadioButton
-          key={index.toString()}
+          key={item.id}
           value={item.id}
           status={checked === index ? "checked" : "unchecked"}
           onPress={() => setChecked(index)}

@@ -24,7 +24,7 @@ const CartItem = ({ item, index }) => {
   };
 
   return (
-    <View key={index.toString()} style={style.container}>
+    <View key={item.id} style={style.container}>
       <View>
         <Text style={style.itemName}>{name}</Text>
         <View style={style.quantity}>
