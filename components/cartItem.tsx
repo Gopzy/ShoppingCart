@@ -11,7 +11,7 @@ import {
 import DisplayAlert from "./alert";
 import { cardObjectType } from "../constants/types";
 
-const CartItem = ({ item, index }: { item: cardObjectType; index: number }) => {
+const CartItem = ({ item }: { item: cardObjectType }) => {
   const dispatch = useDispatch();
   const { quantity, amount, mainImage, name, selectedSize, colour } = item;
 
